@@ -80,7 +80,7 @@ public class MenuManager : MonoBehaviour
         switch (id)
         {
             case 1:
-                SceneManager.LoadScene("Niveaux poutine");
+                SceneManager.LoadScene("Spooky");
                 break;
             case 2:
                 SceneManager.LoadScene("Niveaux patate");
