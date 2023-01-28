@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Hammer : BaseItem {
-  public override string Name { get; set; }
-  public override int Damage { get; set; }
-  public override int Health { get; set; }
+  public override string Name { get; set; } = "Hammer";
+  public override int Damage { get; set; } = 1;
+  public override int Health { get; set; } = 3;
+  public override int XSpeedFactor { get; set; } = 1;
+  public override int YSpeedFactor { get; set; } = 1;
+  public override float Spin { get; set; } = 0.5f;
 
   public Hammer() {
-    Name = "Hammer";
-    Damage = 1;
-    Health = 1;
   }
 
   public override void ApplyEffect() {

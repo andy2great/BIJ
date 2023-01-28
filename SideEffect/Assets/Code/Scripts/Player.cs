@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     public int Health { get; set; }
     public BaseItem Item { get; set; }
+    public bool FacingRight { get; set; }
+    
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +18,15 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Move();
+        Act();
+    }
+
+    private void Move() {
+        if (Input.GetAxis("Horizontal") != 0) {
+            FacingRight = Input.GetAxis("Horizontal") > 0;
+        }
+
         transform.Translate(Input.GetAxis("Horizontal") * Time.deltaTime * 7f, 0f, 0f);
         
         if (Input.GetButtonDown("Jump") && Mathf.Abs(GetComponent<Rigidbody2D>().velocity.y) < 0.001f)
@@ -23,23 +34,34 @@ public class Player : MonoBehaviour
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 7f), ForceMode2D.Impulse);
         }
 
-        // stop sliding when not moving
-        if (Input.GetAxis("Horizontal") == 0)
-        {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
-        }
-
-        // prevent character from tilting
         transform.rotation = Quaternion.identity;
+    }
+
+    private void Act() {
+        if (Input.GetButtonDown("Fire1")) {
+            var throwVector = new Vector2(FacingRight ? 10f : -10f, 5f);
+            throwVector.x += GetComponent<Rigidbody2D>().velocity.x*2;
+
+            Throw(throwVector);
+        }
+    }
+
+    private void Throw(Vector2 vector) {
+        if (Item == null) return;
+        
+        Item.transform.position = transform.position;
+        Item.ThrowItem(vector);
+        Item = null;
     }
 
     void OnTriggerStay2D(Collider2D collision)
     {
-        // pick only one item at a time and add to it's item
-        if (collision.gameObject.tag == "Item" && Item == null)
+        if ((Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.E)) && collision.gameObject.tag == "Item")
         {
+            Throw(new Vector2(0, 7f));
+
             Item = collision.gameObject.GetComponent<BaseItem>();
-            Destroy(collision.gameObject);
+            Item.PickUpItem();
         }
     }
 }
