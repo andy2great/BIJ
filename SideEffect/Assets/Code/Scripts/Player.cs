@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -18,6 +18,17 @@ public class Movement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && Mathf.Abs(GetComponent<Rigidbody2D>().velocity.y) < 0.001f)
         {
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 7f), ForceMode2D.Impulse);
+        }
+
+        // prevent character from tilting
+        transform.rotation = Quaternion.identity;
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && collision.gameObject.tag == "Item")
+        {
+            Destroy(collision.gameObject);
         }
     }
 }
