@@ -84,11 +84,9 @@ public class MenuManager : MonoBehaviour
                 break;
             case 2:
                 SceneManager.LoadScene("Niveaux patate");
-
                 break;
             case 3:
                 SceneManager.LoadScene("Niveaux celine dion");
-
                 break;
         }
 
