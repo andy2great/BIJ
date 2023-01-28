@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Item
   - Platform
+  - ThrownItem
   layers:
   - Default
   - TransparentFX

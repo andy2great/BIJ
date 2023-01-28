@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,19 +8,39 @@ public class Player : MonoBehaviour
     public int Health { get; set; }
     public BaseItem Item { get; set; }
     public bool FacingRight { get; set; }
+    public List<BaseEffect> Effects { get; set; } = new List<BaseEffect>();
     
-
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         Move();
         Act();
+    }
+
+    public void AddEffect(BaseEffect effect) {
+        // if any effects of the same type exist, increment their stage with linq        
+        var existingEffect = Effects.FirstOrDefault(e => e.GetType() == effect.GetType());
+        if (existingEffect != null) {
+            existingEffect.Stage++;
+        } else {
+            Effects.Add(effect);
+            StartCoroutine(effect.ApplyEffect());
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if ((Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.E)) && collision.gameObject.tag == "Item")
+        {
+            Throw(new Vector2(0, 7f));
+
+            Item = collision.gameObject.GetComponent<BaseItem>();
+            Item.PickUpItem();
+        }
     }
 
     private void Move() {
