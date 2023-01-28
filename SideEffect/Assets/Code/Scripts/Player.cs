@@ -32,17 +32,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnTriggerStay2D(Collider2D collision)
-    {
-        if ((Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.E)) && collision.gameObject.tag == "Item")
-        {
-            Throw(new Vector2(0, 7f));
-
-            Item = collision.gameObject.GetComponent<BaseItem>();
-            Item.PickUpItem();
-        }
-    }
-
     private void Move() {
         if (Input.GetAxis("Horizontal") != 0) {
             FacingRight = Input.GetAxis("Horizontal") > 0;
