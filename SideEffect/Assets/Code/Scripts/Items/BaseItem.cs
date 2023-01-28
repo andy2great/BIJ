@@ -9,8 +9,7 @@ public abstract class BaseItem: MonoBehaviour {
   public abstract int XSpeedFactor { get; set; }
   public abstract int YSpeedFactor { get; set; }
   public abstract float Spin { get; set; }
-
-  public abstract void ApplyEffect();
+  public abstract BaseEffect Effect { get; set; }
 
   public void Start() {
     StartCoroutine(Destroy());
@@ -47,7 +46,6 @@ public abstract class BaseItem: MonoBehaviour {
     if (collision.gameObject.tag == "Player" && gameObject.tag == "ThrownItem") {
       ApplyPlayerGettingHit(collision.gameObject);
       ApplyItemGettingHit(gameObject);
-      ApplyEffect();
     }
   }
 
@@ -62,6 +60,8 @@ public abstract class BaseItem: MonoBehaviour {
       playerRigidbody.AddForce(force, ForceMode2D.Impulse);
 
       player.GetComponent<Player>().Health += Damage;
+      // add effect to player
+      player.GetComponent<Player>().AddEffect(Effect);
   }
 
   private void ApplyItemGettingHit(GameObject item) {
