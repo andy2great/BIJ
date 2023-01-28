@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class SpawnItem : MonoBehaviour
 {
-    public List<GameObject> itemsToSpawn = new List<GameObject>();
-    public int spawnTime = 10;
+    public List<GameObject> ItemsToSpawn = new List<GameObject>();
+    public int SpawnTime = 10;
+    public int MaxItems = 5;
+    public string ItemTag = "Item";
 
     private int _startX = 0;
     private int _endX = 0;
@@ -22,20 +24,25 @@ public class SpawnItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // spawn an item each 10 seconds
     }
 
-    // spawn items
     IEnumerator SpawnItems()
     {
         while (true)
         {
-            int randomTime = Random.Range(spawnTime-5, spawnTime+5);
+            GameObject[] items = GameObject.FindGameObjectsWithTag(ItemTag);
+            if (items.Length >= MaxItems)
+            {
+                yield return new WaitForSeconds(1);
+                continue;
+            }
+
+            int randomTime = Random.Range(SpawnTime-5, SpawnTime+5);
             // spawn an item
-            int randomItem = Random.Range(0, itemsToSpawn.Count);
+            int randomItem = Random.Range(0, ItemsToSpawn.Count);
             int randomX = Random.Range(_startX, _endX);
             Vector3 spawnPosition = new Vector3(randomX, _droppingPoint, 0);
-            Instantiate(itemsToSpawn[randomItem], spawnPosition, Quaternion.identity);
+            Instantiate(ItemsToSpawn[randomItem], spawnPosition, Quaternion.identity);
             yield return new WaitForSeconds(randomTime);
         }
         
