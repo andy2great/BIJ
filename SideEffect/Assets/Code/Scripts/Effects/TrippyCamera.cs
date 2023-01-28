@@ -8,8 +8,8 @@ public class TrippyCamera: BaseEffect {
   public override IEnumerator ApplyEffect() {
     while (true) {
       var cameraRotation = Camera.main.transform.rotation;
-      Camera.main.transform.Rotate(0, 0, (cameraRotation.z + 1) % 360);
-      yield return new WaitForSeconds(0.01f - (0.0001f * Stage));
+      Camera.main.transform.Rotate(0, 0, 1 * Stage);
+      yield return new WaitForSeconds(0.05f);
     }
   }
 
