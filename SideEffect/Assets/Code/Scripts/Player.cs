@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public int Health { get; set; }
+    public BaseItem Item { get; set; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,14 +23,22 @@ public class Player : MonoBehaviour
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 7f), ForceMode2D.Impulse);
         }
 
+        // stop sliding when not moving
+        if (Input.GetAxis("Horizontal") == 0)
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
+        }
+
         // prevent character from tilting
         transform.rotation = Quaternion.identity;
     }
 
     void OnTriggerStay2D(Collider2D collision)
     {
-        if (Input.GetKey(KeyCode.LeftShift) && collision.gameObject.tag == "Item")
+        // pick only one item at a time and add to it's item
+        if (collision.gameObject.tag == "Item" && Item == null)
         {
+            Item = collision.gameObject.GetComponent<BaseItem>();
             Destroy(collision.gameObject);
         }
     }
