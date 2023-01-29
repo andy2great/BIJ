@@ -9,8 +9,8 @@ public class SpawnItem : MonoBehaviour
     public int MaxItems = 5;
     public string ItemTag = "Item";
 
-    private int _startX = 0;
-    private int _endX = 0;
+    private float _startX = 0f;
+    private float _endX = 0f;
     private int _droppingPoint = 0;
     
     void Start()
@@ -40,7 +40,7 @@ public class SpawnItem : MonoBehaviour
             int randomTime = Random.Range(SpawnTime-5, SpawnTime+5);
             // spawn an item
             int randomItem = Random.Range(0, ItemsToSpawn.Count);
-            int randomX = Random.Range(_startX, _endX);
+            var randomX = Random.Range(_startX, _endX);
             Vector3 spawnPosition = new Vector3(randomX, _droppingPoint, 0);
             Instantiate(ItemsToSpawn[randomItem], spawnPosition, Quaternion.identity);
             yield return new WaitForSeconds(randomTime);
