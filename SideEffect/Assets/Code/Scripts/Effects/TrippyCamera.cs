@@ -2,18 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrippyCamera: BaseEffect {
-  public override string Name { get; set; } = "Trippy Camera";
+public class TrippyCamera : BaseEffect {
+  public override string Name => "Trippy Camera";
+
+  private bool _rotating = false;
   
-  public override IEnumerator ApplyEffect() {
-    while (true) {
+  public override IEnumerator ApplyEffect()
+  {
+    _rotating = true;
+
+    while (true)
+    {
+      if (!_rotating) break;
+
       var cameraRotation = Camera.main.transform.rotation;
       Camera.main.transform.Rotate(0, 0, 1 * Stage);
       yield return new WaitForSeconds(0.05f);
     }
   }
 
-  public override void RemoveEffect() {
+  public override void RemoveEffect()
+  {
+    _rotating = false;
     Camera.main.transform.Rotate(0, 0, 0);
   }
 }

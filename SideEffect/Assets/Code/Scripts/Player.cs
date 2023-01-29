@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     public void AddEffect(BaseEffect effect) {
         // if any effects of the same type exist, increment their stage with linq        
         var existingEffect = Effects.FirstOrDefault(e => e.GetType() == effect.GetType());
+
         if (existingEffect != null) {
             existingEffect.Stage++;
         } else {

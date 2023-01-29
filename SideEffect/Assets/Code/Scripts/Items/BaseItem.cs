@@ -1,21 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseItem: MonoBehaviour {
+public abstract class BaseItem : MonoBehaviour {
   public abstract string Name { get; set; }
   public abstract int Damage { get; set; }
   public abstract int Health { get; set; }
   public abstract int XSpeedFactor { get; set; }
   public abstract int YSpeedFactor { get; set; }
   public abstract float Spin { get; set; }
-  public abstract BaseEffect Effect { get; set; }
+  
+  public abstract Type[] EffectTypes { get; }
+  public BaseEffect[] Effects { get; set; }
 
-  public void Start() {
+  public void Awake()
+  {
+    Effects = new BaseEffect[EffectTypes.Length];
+    
+    var index = 0;
+    foreach (var effectType in EffectTypes) {
+      Effects[index] = gameObject.AddComponent(effectType) as BaseEffect;
+    }
+  }
+
+  public void Start()
+  {
     StartCoroutine(Destroy());
   }
 
-  public void Update() {
+  public void Update()
+  {
     if (gameObject.tag == "ThrownItem") {
       if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) < 0.001f && Mathf.Abs(GetComponent<Rigidbody2D>().velocity.y) < 0.001f) {
         gameObject.tag = "Item";
@@ -49,7 +64,8 @@ public abstract class BaseItem: MonoBehaviour {
     }
   }
 
-  private void ApplyPlayerGettingHit(GameObject player) {
+  private void ApplyPlayerGettingHit(GameObject player)
+  {
       var directionX = (player.transform.position - gameObject.transform.position).x < 0 ? -1 : 1;
       var directionY = (player.transform.position - gameObject.transform.position).y < 0 ? -1 : 1;
       
@@ -60,8 +76,11 @@ public abstract class BaseItem: MonoBehaviour {
       playerRigidbody.AddForce(force, ForceMode2D.Impulse);
 
       player.GetComponent<Player>().Health += Damage;
-      // add effect to player
-      player.GetComponent<Player>().AddEffect(Effect);
+      
+      // add effects to player
+      foreach(var effect in Effects) {
+        player.GetComponent<Player>().AddEffect(effect);
+      }
   }
 
   private void ApplyItemGettingHit(GameObject item) {
@@ -73,7 +92,7 @@ public abstract class BaseItem: MonoBehaviour {
     item.GetComponent<BaseItem>().Health -= 1;
 
     if (item.GetComponent<BaseItem>().Health <= 0) {
-      Object.Destroy(item);
+      UnityEngine.Object.Destroy(item);
     }
   }
 
@@ -89,7 +108,7 @@ public abstract class BaseItem: MonoBehaviour {
         yield return new WaitForSeconds(10f);
         if (gameObject.tag != "Item") continue;
 
-        Object.Destroy(gameObject);
+        UnityEngine.Object.Destroy(gameObject);
       }
       yield return new WaitForSeconds(1f);
     }
