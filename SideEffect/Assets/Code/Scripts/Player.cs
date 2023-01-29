@@ -151,8 +151,6 @@ public class Player : NetworkBehaviour
   {
     if (transform.position.y < -10)
     {
-      transform.position = new Vector3(0, 0, 0);
-      GetComponent<Rigidbody2D>().velocity = Vector2.zero;
       Health = 3;
       _hasItem.Value = false;
       Item = null;
@@ -162,6 +160,8 @@ public class Player : NetworkBehaviour
 
   [ClientRpc]
   private void RemoveEffectsClientRpc() {
+    transform.position = new Vector3(0, 0, 0);
+    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     foreach (var effect in Effects)
     {
       
