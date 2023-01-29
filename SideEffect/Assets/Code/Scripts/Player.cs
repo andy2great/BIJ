@@ -24,13 +24,13 @@ public class Player : MonoBehaviour
     Act();
   }
 
-  public IEnumerator AddEffect(BaseEffect effect)
+  public void AddEffect(BaseEffect effect)
   {
     if (!hasReceivedEffect)
     {
       hasReceivedEffect = true;
       PauseGame();
-      yield return ShowWarning();
+      StartCoroutine(ShowWarning());
       ResumeGame();
     }
     // if any effects of the same type exist, increment their stage with linq        
