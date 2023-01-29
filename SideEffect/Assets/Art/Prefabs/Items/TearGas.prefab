@@ -70,12 +70,12 @@ GameObject:
   - component: {fileID: 5706422848010296721}
   - component: {fileID: 2818933859554657318}
   - component: {fileID: 390715206160669425}
-  - component: {fileID: 8622176921721909535}
   - component: {fileID: 2564428381200101347}
   - component: {fileID: 2073069552929135624}
   - component: {fileID: 8497937563854024814}
+  - component: {fileID: 7191515113670762695}
   m_Layer: 0
-  m_Name: Hammer
+  m_Name: TearGas
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,7 +117,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 215e54968b66fc81e8130477fff5c48f, type: 2}
+  - {fileID: 2100000, guid: d51d4d573e53f9b61b82ad3448b1ee12, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -196,18 +196,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.025552154}
   m_EdgeRadius: 0
---- !u!114 &8622176921721909535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6513485075752930715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b191d8d508b4eab478c67cfce3c1174c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2564428381200101347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,5 +248,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80d7c879794dfda4687da0e400131852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7191515113670762695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6513485075752930715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e61e5da4fff0712d86036b8cee5da79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

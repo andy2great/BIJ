@@ -308,7 +308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3957006198229372225, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3957006198229372225, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -428,6 +428,10 @@ PrefabInstance:
     - target: {fileID: 4311443943938644230, guid: d78de5fc6bb07174fac6516ff4653644, type: 3}
       propertyPath: m_Size.y
       value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 5441093833863859719, guid: d78de5fc6bb07174fac6516ff4653644, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3658069609
       objectReference: {fileID: 0}
     - target: {fileID: 5975601225414115923, guid: d78de5fc6bb07174fac6516ff4653644, type: 3}
       propertyPath: PauseScreen

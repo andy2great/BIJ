@@ -21,9 +21,11 @@ public class TrippyCamera : BaseEffect {
     }
   }
 
-  public override void RemoveEffect()
+  public override IEnumerator RemoveEffect()
   {
     _rotating = false;
     Camera.main.transform.Rotate(0, 0, 0);
+
+    yield return null;
   }
 }
