@@ -194,7 +194,7 @@ public class Player : NetworkBehaviour
       return itemX == x && itemY == y;
     });
     
-    Throw(new Vector2(0, 7f));
+    Throw(new Vector2(0, 10f));
      
     if (item == null) return;
     
