@@ -83,7 +83,15 @@ public class Player : NetworkBehaviour
     {
       Effects.Add(effect);
       StartCoroutine(effect.ApplyEffect());
+      StartCoroutine(RemoveEffect(effect));
     }
+  }
+  
+  public IEnumerator RemoveEffect(BaseEffect effect)
+  {
+    yield return new WaitForSecondsRealtime(7.5f);
+    StartCoroutine(effect.RemoveEffect());
+    Effects.Remove(effect);
   }
 
   private IEnumerator ShowWarning()
