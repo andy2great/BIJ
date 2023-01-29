@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cure : BaseItem
+public class Medecine : BaseItem
 {
   public override string Name { get; set; } = "Cure";
   public override int Damage { get; set; } = 0;

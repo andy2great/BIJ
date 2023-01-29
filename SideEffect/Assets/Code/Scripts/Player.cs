@@ -16,7 +16,6 @@ public class Player : NetworkBehaviour
 
   void Start()
   {
-    PauseScreen.gameObject.SetActive(false);
   }
 
   void Update()
