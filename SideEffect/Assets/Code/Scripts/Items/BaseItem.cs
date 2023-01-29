@@ -86,7 +86,7 @@ public abstract class BaseItem : MonoBehaviour
     // add effect to player
     foreach (var effect in Effects)
     {
-      StartCoroutine(player.GetComponent<Player>().AddEffect(Effect));
+      StartCoroutine(player.GetComponent<Player>().AddEffect(effect));
     }
   }
 
