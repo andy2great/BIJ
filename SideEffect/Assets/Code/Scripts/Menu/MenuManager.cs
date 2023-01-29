@@ -44,8 +44,8 @@ public class MenuManager : MonoBehaviour
 
     public void MpChoiceHost()
     {
-        //TODO: LAUNCH THE SERVER
         NetworkManager.Singleton.StartHost();
+
         MPChoice.SetActive(false);
         HostLobby.SetActive(true);
 
