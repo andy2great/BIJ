@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MenuNetworking : NetworkBehaviour
 {
@@ -34,5 +35,18 @@ public class MenuNetworking : NetworkBehaviour
     {
         GameObject.Find("StatusLobby").GetComponent<TMP_Text>().text = playercount + " Player in lobby";
 
+    }
+
+    public void LaunchGame(string Scene)
+    {
+        if (IsHost)
+        {
+            var status = NetworkManager.SceneManager.LoadScene(Scene,LoadSceneMode.Single);
+            if (status != SceneEventProgressStatus.Started)
+            {
+                Debug.LogWarning($"Failed to load {Scene} " +
+                      $"with a {nameof(SceneEventProgressStatus)}: {status}");
+            }
+        }
     }
 }

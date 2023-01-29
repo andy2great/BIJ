@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
+using Unity.VisualScripting;
 
 public class MenuManager : MonoBehaviour
 {
@@ -48,6 +49,9 @@ public class MenuManager : MonoBehaviour
 
         MPChoice.SetActive(false);
         HostLobby.SetActive(true);
+        GameObject.Find("Client").SetActive(false);
+        GameObject.Find("Server").SetActive(true);
+
 
     }
 
@@ -59,9 +63,7 @@ public class MenuManager : MonoBehaviour
     }
     public void JoinIPJoin()
     {
-        // TODO: Take the ip put it in the networkmanager, if they are an error
-        // put the error in the ErrorLogin.text, if not show the next menu
-
+        //TODO: IF an errror while connection show it
         var input = GameObject.Find("IP").GetComponent<TMP_InputField>();
         var Error = GameObject.Find("ErrorLogin").GetComponent<TMP_Text>();
 
@@ -72,28 +74,28 @@ public class MenuManager : MonoBehaviour
 
         JoinIP.SetActive(false);
         HostLobby.SetActive(true);
+        GameObject.Find("Client").SetActive(true);
+        GameObject.Find("Server").SetActive(false);
+
     }
 
     public void HostLobbyLaunchGame()
     {
-        //TODO: Connect the StatusLobby text to the ammount of player in the lobby
         HostLobby.SetActive(false);
         MapSelection.SetActive(true);
     }
     public void MapSelectionGame(int id)
     {
         MapSelection.SetActive(false);
-        // TODO: LAUNCH LA BONNE MAP
+
         switch (id)
         {
             case 1:
-                SceneManager.LoadScene("Spooky");
+                gameObject.GetComponent<MenuNetworking>().LaunchGame("Spooky");
                 break;
             case 2:
-                SceneManager.LoadScene("Niveaux patate");
                 break;
             case 3:
-                SceneManager.LoadScene("Niveaux celine dion");
                 break;
         }
 
