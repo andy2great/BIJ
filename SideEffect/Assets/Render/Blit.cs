@@ -11,7 +11,10 @@ namespace Cyan {
 		public BlitSettings settings = new BlitSettings();
 		public Dictionary<Material, BlitPass> blitPasses = new Dictionary<Material, BlitPass>();
 
-		public override void Create() { }
+		public override void Create()
+		{
+			Editor.stop += Destroy;
+		}
 
         public void AddMaterial(Material material, BlitSettings? blitSettings = null)
         {
@@ -45,7 +48,7 @@ namespace Cyan {
             }
 		}
 
-		protected virtual void Dispose(bool disposing)
+		protected void Destroy()
 		{
             blitPasses = new Dictionary<Material, BlitPass>();
 		}
@@ -97,7 +100,6 @@ namespace Cyan {
             };
         }
     }
-
 
 	public class BlitPass : ScriptableRenderPass {
 

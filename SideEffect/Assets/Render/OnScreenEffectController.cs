@@ -25,6 +25,7 @@ public class OnScreenEffectController : MonoBehaviour
     {
         if (TryGetFeature(out var feature))
         {
+            Debug.Log(material);
             var blitFeature = feature as Blit;
             blitFeature.AddMaterial(material);
         }
