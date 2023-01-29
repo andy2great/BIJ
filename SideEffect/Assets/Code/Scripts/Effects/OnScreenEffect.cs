@@ -24,6 +24,7 @@ public abstract class OnScreenEffect : BaseEffect
 
     public override IEnumerator RemoveEffect()
     {
+        Debug.Log(" I HAVE UPDATED!!!!!!");
         _onScreenEffectController.RemoveMaterial(Material);
         
         yield return null;

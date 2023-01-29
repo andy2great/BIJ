@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.SceneManagement;
 
 public class Player : NetworkBehaviour
 {
@@ -42,9 +43,9 @@ public class Player : NetworkBehaviour
 
   void Update()
   {
-    // if is server
     if (!IsOwner) return;
 
+    CheckDeathServerRpc();
     ApplyVisual();
     Move();
     Act();
@@ -143,6 +144,31 @@ public class Player : NetworkBehaviour
     {
       PickUpItemServerRpc(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
     }
+  }
+
+  [ServerRpc]
+  private void CheckDeathServerRpc()
+  {
+    if (transform.position.y < -10)
+    {
+      Health = 3;
+      _hasItem.Value = false;
+      Item = null;
+      RemoveEffectsClientRpc();
+    }
+  }
+
+  [ClientRpc]
+  private void RemoveEffectsClientRpc() {
+    transform.position = new Vector3(0, 0, 0);
+    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    foreach (var effect in Effects)
+    {
+      
+      Debug.Log($"Remove {effect.GetType().Name}");
+      StartCoroutine(effect.RemoveEffect());
+    }
+    Effects.Clear();
   }
 
   [ServerRpc]
