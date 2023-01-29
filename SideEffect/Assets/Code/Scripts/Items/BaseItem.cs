@@ -61,7 +61,7 @@ public abstract class BaseItem: MonoBehaviour {
 
       player.GetComponent<Player>().Health += Damage;
       // add effect to player
-      player.GetComponent<Player>().AddEffect(Effect);
+      StartCoroutine(player.GetComponent<Player>().AddEffect(Effect));
   }
 
   private void ApplyItemGettingHit(GameObject item) {

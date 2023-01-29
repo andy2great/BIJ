@@ -200,6 +200,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d3fa8c98ba7a954cb5b4d3f1ca61b78, type: 3}
+--- !u!114 &440022167 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7278798543922671952, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
+  m_PrefabInstance: {fileID: 679866614}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca0c01c53ebaba344b00e6b958a270ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &470951051
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,6 +295,63 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &679866614
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2299638615087115937, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
+      propertyPath: m_Name
+      value: PauseScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957006198229372225, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957006198229372225, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957006198229372225, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957006198229372225, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957006198229372225, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957006198229372225, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957006198229372225, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957006198229372225, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957006198229372225, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957006198229372225, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957006198229372225, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e0324eb400ea6ab4caa60bbcd83f6d7a, type: 3}
 --- !u!1 &841776381
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,6 +414,10 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 0.55
       objectReference: {fileID: 0}
+    - target: {fileID: 5975601225414115923, guid: d78de5fc6bb07174fac6516ff4653644, type: 3}
+      propertyPath: PauseScreen
+      value: 
+      objectReference: {fileID: 440022167}
     - target: {fileID: 8758646316540824428, guid: d78de5fc6bb07174fac6516ff4653644, type: 3}
       propertyPath: m_RootOrder
       value: 2
