@@ -13,7 +13,6 @@ public class MenuNetworking : NetworkBehaviour
     /// </summary>
     public override void OnNetworkSpawn()
     {
-     
         if (IsServer)
         {
             // Server broadcasts to all clients when a new client connects (just for example purposes)
@@ -24,17 +23,18 @@ public class MenuNetworking : NetworkBehaviour
             // Clients send a unique Guid to the server
         }
     }
+
     private void OnClientConnectedCallback(ulong clientId)
     {
         GameObject.Find("StatusLobby").GetComponent<TMP_Text>().text = NetworkManager.ConnectedClients.Count + " Player in lobby";
         UpdateLobbyUIClientRpc(NetworkManager.ConnectedClients.Count);
         Debug.Log("PATATE");
     }
+
     [ClientRpc]
     void UpdateLobbyUIClientRpc(int playercount)
     {
         GameObject.Find("StatusLobby").GetComponent<TMP_Text>().text = playercount + " Player in lobby";
-
     }
 
     public void LaunchGame(string Scene)

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 public class SpawnItem : MonoBehaviour
 {
@@ -26,8 +27,18 @@ public class SpawnItem : MonoBehaviour
     {
     }
 
+    [ServerRpc]
     IEnumerator SpawnItems()
     {
+        try {
+            if (!NetworkManager.Singleton.IsServer)
+            {
+                yield break;
+            }
+        } catch {
+            Debug.Log("No NetworkManager found");
+        }
+
         while (true)
         {
             GameObject[] items = GameObject.FindGameObjectsWithTag(ItemTag);
@@ -42,7 +53,15 @@ public class SpawnItem : MonoBehaviour
             int randomItem = Random.Range(0, ItemsToSpawn.Count);
             var randomX = Random.Range(_startX, _endX);
             Vector3 spawnPosition = new Vector3(randomX, _droppingPoint, 0);
-            Instantiate(ItemsToSpawn[randomItem], spawnPosition, Quaternion.identity);
+
+
+            try {
+                var go = Instantiate(ItemsToSpawn[randomItem], spawnPosition, Quaternion.identity);
+                go.GetComponent<NetworkObject>().Spawn();
+            } catch {
+                Debug.Log("No NetworkObject found");
+            }
+
             yield return new WaitForSeconds(randomTime);
         }
         

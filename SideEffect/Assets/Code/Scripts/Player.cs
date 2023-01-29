@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Unity.Netcode;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
   public int Health { get; set; }
   public BaseItem Item { get; set; }
@@ -20,8 +21,21 @@ public class Player : MonoBehaviour
 
   void Update()
   {
+    VisualizeEffects();
+    if (!IsOwner) return;
+
     Move();
     Act();
+  }
+
+  public void VisualizeEffects()
+  {
+    var walking = Input.GetAxis("Horizontal") != 0;
+    if (walking)
+    {
+      FacingRight = Input.GetAxis("Horizontal") > 0;
+      GetComponent<SpriteRenderer>().flipX = !FacingRight;
+    }
   }
 
   public void AddEffect(BaseEffect effect)
@@ -70,12 +84,6 @@ public class Player : MonoBehaviour
   {
     var walking = Input.GetAxis("Horizontal") != 0;
     GetComponent<Animator>().SetBool("BlWalk", walking);
-    if (walking)
-    {
-      FacingRight = Input.GetAxis("Horizontal") > 0;
-      GetComponent<SpriteRenderer>().flipX = !FacingRight;
-    }
-
     transform.Translate(Input.GetAxis("Horizontal") * Time.deltaTime * 7f, 0f, 0f);
 
     if (Input.GetButtonDown("Jump") && Mathf.Abs(GetComponent<Rigidbody2D>().velocity.y) < 0.001f && !(Input.GetAxis("Vertical") < 0))
