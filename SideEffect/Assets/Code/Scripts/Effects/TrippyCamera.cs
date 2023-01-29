@@ -24,7 +24,7 @@ public class TrippyCamera : BaseEffect {
   public override IEnumerator RemoveEffect()
   {
     _rotating = false;
-    Camera.main.transform.Rotate(0, 0, 0);
+    Camera.main.transform.rotation = Quaternion.identity;
 
     yield return null;
   }
