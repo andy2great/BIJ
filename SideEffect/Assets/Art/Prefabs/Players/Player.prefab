@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7454186719519079642}
   - component: {fileID: 5408500903841410632}
   - component: {fileID: 5441093833863859719}
-8b63bdd527c7c
+  - component: {fileID: 4034726905880841109}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a54a9903df6e1b4894620aa94f8e50b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PauseScreen: {fileID: 0}
 --- !u!114 &7454186719519079642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,3 +205,23 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!95 &4034726905880841109
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206802792286332485}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1907eac0e96fa904fb91c5b0d0fe1a1c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
