@@ -6,8 +6,8 @@ using Unity.Netcode;
 public class SpawnItem : MonoBehaviour
 {
     public List<GameObject> ItemsToSpawn = new List<GameObject>();
-    public int SpawnTime = 10;
-    public int MaxItems = 5;
+    public int SpawnTime = 5;
+    public int MaxItems = 10;
     public string ItemTag = "Item";
 
     private float _startX = 0f;
