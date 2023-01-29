@@ -7,5 +7,5 @@ public abstract class BaseEffect : MonoBehaviour {
   public int Stage { get; set; } = 1;
 
   public abstract IEnumerator ApplyEffect();
-  public abstract void RemoveEffect();
+  public abstract IEnumerator RemoveEffect();
 }

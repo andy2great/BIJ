@@ -22,8 +22,10 @@ public abstract class OnScreenEffect : BaseEffect
         yield return null;
     }
 
-    public override void RemoveEffect()
+    public override IEnumerator RemoveEffect()
     {
         _onScreenEffectController.RemoveMaterial(Material);
+        
+        yield return null;
     }
 }

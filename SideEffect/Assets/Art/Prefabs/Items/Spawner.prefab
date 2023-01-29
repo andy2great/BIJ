@@ -99,6 +99,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemsToSpawn:
   - {fileID: 6513485075752930715, guid: 76563b92e529e74479c0b342b932a6c9, type: 3}
-  SpawnTime: 10
-  MaxItems: 5
+  - {fileID: 6513485075752930715, guid: da02ec425d510599081e2852fc612edd, type: 3}
+  - {fileID: 6513485075752930715, guid: 94f5dddc215f05637aac20585342af63, type: 3}
+  - {fileID: 6513485075752930715, guid: 77f8b1ba403ceddb99d39d6912d9b950, type: 3}
+  - {fileID: 6513485075752930715, guid: 53505c84a13ec569d972e3035b2d3ab1, type: 3}
+  - {fileID: 6513485075752930715, guid: 594ee851857d4ca44b9917090858101b, type: 3}
+  SpawnTime: 5
+  MaxItems: 8
   ItemTag: Item

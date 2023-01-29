@@ -40,6 +40,19 @@ public class Player : NetworkBehaviour
 
   public void AddEffect(BaseEffect effect)
   {
+    if (effect.Name == "Cure") 
+    {
+      var currentEffects = new List<BaseEffect>(Effects);
+
+      foreach(var currentEffect in currentEffects)
+      {
+        StartCoroutine(currentEffect.RemoveEffect());
+        Effects.Remove(currentEffect);
+      }
+
+      return;
+    }
+
     // Activate trigger animation
     GetComponent<Animator>().SetTrigger("BlHit");
 
@@ -50,6 +63,7 @@ public class Player : NetworkBehaviour
       StartCoroutine(ShowWarning());
       ResumeGame();
     }
+
     var existingEffect = Effects.FirstOrDefault(e => e.GetType() == effect.GetType());
     if (existingEffect != null)
     {
