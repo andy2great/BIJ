@@ -28,10 +28,10 @@ public class Player : MonoBehaviour
   {
     if (!hasReceivedEffect)
     {
-        hasReceivedEffect = true;
-        PauseGame();
-        yield return ShowWarning();
-        ResumeGame();
+      hasReceivedEffect = true;
+      PauseGame();
+      yield return ShowWarning();
+      ResumeGame();
     }
     // if any effects of the same type exist, increment their stage with linq        
     var existingEffect = Effects.FirstOrDefault(e => e.GetType() == effect.GetType());
@@ -44,7 +44,6 @@ public class Player : MonoBehaviour
       Effects.Add(effect);
       StartCoroutine(effect.ApplyEffect());
     }
-    yield return null;
   }
 
   private IEnumerator ShowWarning()
