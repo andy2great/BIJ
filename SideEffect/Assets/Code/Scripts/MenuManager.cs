@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 
 public class MenuManager : MonoBehaviour
 {
@@ -12,7 +14,8 @@ public class MenuManager : MonoBehaviour
     public GameObject HostLobby;
     public GameObject MapSelection;
     public GameObject OptionMenu;
-
+    UnityTransport Transport;
+    public ushort Port;
 
     void Start()
     {
@@ -42,6 +45,7 @@ public class MenuManager : MonoBehaviour
     public void MpChoiceHost()
     {
         //TODO: LAUNCH THE SERVER
+        NetworkManager.Singleton.StartHost();
         MPChoice.SetActive(false);
         HostLobby.SetActive(true);
 
@@ -60,7 +64,10 @@ public class MenuManager : MonoBehaviour
 
         var input = GameObject.Find("IP").GetComponent<TMP_InputField>();
         var Error = GameObject.Find("ErrorLogin").GetComponent<TMP_Text>();
-        // input.text to get the IP
+
+        Transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+        Transport.SetConnectionData(input.text, 7777);
+        NetworkManager.Singleton.StartClient();
 
 
         JoinIP.SetActive(false);
