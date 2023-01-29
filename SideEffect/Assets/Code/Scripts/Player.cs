@@ -33,7 +33,6 @@ public class Player : MonoBehaviour
       StartCoroutine(ShowWarning());
       ResumeGame();
     }
-    // if any effects of the same type exist, increment their stage with linq        
     var existingEffect = Effects.FirstOrDefault(e => e.GetType() == effect.GetType());
     if (existingEffect != null)
     {

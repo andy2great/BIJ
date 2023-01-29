@@ -23,6 +23,7 @@ public abstract class BaseItem : MonoBehaviour
     foreach (var effectType in EffectTypes)
     {
       Effects[index] = gameObject.AddComponent(effectType) as BaseEffect;
+      ++index;
     }
   }
 
@@ -86,6 +87,7 @@ public abstract class BaseItem : MonoBehaviour
     // add effect to player
     foreach (var effect in Effects)
     {
+      Debug.Log(effect.Name);
       player.GetComponent<Player>().AddEffect(effect);
     }
   }
