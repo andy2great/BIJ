@@ -1,19 +1,37 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Unity.Netcode;
 
-public abstract class BaseItem : MonoBehaviour
+public abstract class BaseItem : NetworkBehaviour
 {
   public abstract string Name { get; set; }
   public abstract int Damage { get; set; }
   public abstract int Health { get; set; }
-  public abstract int XSpeedFactor { get; set; }
-  public abstract int YSpeedFactor { get; set; }
+  public abstract float XSpeedFactor { get; set; }
+  public abstract float YSpeedFactor { get; set; }
   public abstract float Spin { get; set; }
 
   public abstract Type[] EffectTypes { get; }
   public BaseEffect[] Effects { get; set; }
+
+  private NetworkVariable<bool> _active = new NetworkVariable<bool>(
+    true,
+    NetworkVariableReadPermission.Everyone,
+    NetworkVariableWritePermission.Server
+  );
+
+  public override void OnNetworkSpawn()
+  {
+    _active.OnValueChanged += (oldValue, newValue) =>
+    {
+      gameObject.SetActive(newValue);
+      Debug.Log($"Item {Name} is now {(newValue ? "active" : "inactive")}");
+    };
+  }
+
 
   public void Awake()
   {
@@ -45,12 +63,12 @@ public abstract class BaseItem : MonoBehaviour
 
   public void PickUpItem()
   {
-    gameObject.SetActive(false);
+    _active.Value = false;
   }
 
   public void ThrowItem(Vector2 vector)
   {
-    gameObject.SetActive(true);
+    _active.Value = true;
     gameObject.layer = LayerMask.NameToLayer("Default");
     gameObject.tag = "Untagged";
     vector.x *= XSpeedFactor;
@@ -67,13 +85,21 @@ public abstract class BaseItem : MonoBehaviour
   {
     if (collision.gameObject.tag == "Player" && gameObject.tag == "ThrownItem")
     {
-      ApplyPlayerGettingHit(collision.gameObject);
+      // get client id of player
+      var clientId = collision.gameObject.GetComponent<Player>().ClientId;
+      ApplyPlayerGettingHitClientRpc(clientId);
       ApplyItemGettingHit(gameObject);
     }
   }
 
-  private void ApplyPlayerGettingHit(GameObject player)
+  [ClientRpc]
+  private void ApplyPlayerGettingHitClientRpc(ulong playerId)
   {
+    var player = GameObject.FindGameObjectsWithTag("Player").FirstOrDefault(p => p.GetComponent<Player>().ClientId == playerId);
+    if (player == null) return;
+
+    Debug.Log($"Player with id {playerId} got hit by item {Name}");
+    Debug.Log($"Player health before: {player.GetComponent<Player>().Health}");
     var directionX = (player.transform.position - gameObject.transform.position).x < 0 ? -1 : 1;
     var directionY = (player.transform.position - gameObject.transform.position).y < 0 ? -1 : 1;
 
@@ -87,7 +113,6 @@ public abstract class BaseItem : MonoBehaviour
     // add effect to player
     foreach (var effect in Effects)
     {
-      Debug.Log(effect.Name);
       player.GetComponent<Player>().AddEffect(effect);
     }
   }
@@ -122,8 +147,7 @@ public abstract class BaseItem : MonoBehaviour
       {
         yield return new WaitForSeconds(10f);
         if (gameObject.tag != "Item") continue;
-
-        UnityEngine.Object.Destroy(gameObject);
+        gameObject.GetComponent<NetworkObject>().Despawn();
       }
       yield return new WaitForSeconds(1f);
     }

@@ -9,48 +9,58 @@ public class Player : NetworkBehaviour
 {
   public int Health { get; set; }
   public BaseItem Item { get; set; }
-  public bool FacingRight { get; set; }
   public List<BaseEffect> Effects { get; set; } = new List<BaseEffect>();
   public PauseMenu PauseScreen;
+  public ulong ClientId { get; set; } = 0;
+  
   private bool hasReceivedEffect = false;
+
+  private NetworkVariable<bool> _facingRight = new NetworkVariable<bool>(
+    true,
+    NetworkVariableReadPermission.Everyone,
+    NetworkVariableWritePermission.Owner
+  );
+  private NetworkVariable<bool> _hasItem = new NetworkVariable<bool>(
+    false,
+    NetworkVariableReadPermission.Everyone,
+    NetworkVariableWritePermission.Server
+  );
+
+  public override void OnNetworkSpawn()
+  {
+    _facingRight.OnValueChanged += (oldValue, newValue) =>
+    {
+      GetComponent<SpriteRenderer>().flipX = !newValue;
+    };
+  }
 
   void Start()
   {
+    ClientId = OwnerClientId;
+    Debug.Log($"Player {ClientId} has spawned");
   }
 
   void Update()
   {
-    VisualizeEffects();
+    // if is server
     if (!IsOwner) return;
 
+    ApplyVisual();
     Move();
     Act();
   }
 
-  public void VisualizeEffects()
-  {
+  private void ApplyVisual() {
     var walking = Input.GetAxis("Horizontal") != 0;
     if (walking)
     {
-      FacingRight = Input.GetAxis("Horizontal") > 0;
-      GetComponent<SpriteRenderer>().flipX = !FacingRight;
+      _facingRight.Value = Input.GetAxis("Horizontal") > 0;
     }
   }
 
   public void AddEffect(BaseEffect effect)
   {
-    if (effect.Name == "Cure") 
-    {
-      var currentEffects = new List<BaseEffect>(Effects);
-
-      foreach(var currentEffect in currentEffects)
-      {
-        StartCoroutine(currentEffect.RemoveEffect());
-        Effects.Remove(currentEffect);
-      }
-
-      return;
-    }
+    if (!IsOwner) return;
 
     // Activate trigger animation
     GetComponent<Animator>().SetTrigger("BlHit");
@@ -101,6 +111,7 @@ public class Player : NetworkBehaviour
 
     if (Input.GetButtonDown("Jump") && Mathf.Abs(GetComponent<Rigidbody2D>().velocity.y) < 0.001f && !(Input.GetAxis("Vertical") < 0))
     {
+      Debug.Log("Jump");
       GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, 10f), ForceMode2D.Impulse);
     }
 
@@ -111,7 +122,7 @@ public class Player : NetworkBehaviour
   {
     if (Input.GetButtonDown("Fire1"))
     {
-      var throwVector = new Vector2(FacingRight ? 10f : -10f, 5f);
+      var throwVector = new Vector2(_facingRight.Value ? 10f : -10f, 5f);
       throwVector.x += GetComponent<Rigidbody2D>().velocity.x * 2;
 
       Throw(throwVector);
@@ -120,22 +131,50 @@ public class Player : NetworkBehaviour
 
   private void Throw(Vector2 vector)
   {
-    if (Item == null) return;
+    if (!_hasItem.Value) return;
     GetComponent<Animator>().SetTrigger("TrAttack");
-
-    Item.transform.position = transform.position;
-    Item.ThrowItem(vector);
-    Item = null;
+    ThrowItemServerRpc(vector.x, vector.y, gameObject.transform.position.x, gameObject.transform.position.y);
   }
 
   void OnTriggerStay2D(Collider2D collision)
   {
+    // error 
     if ((Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.E)) && collision.gameObject.tag == "Item")
     {
-      Throw(new Vector2(0, 7f));
-
-      Item = collision.gameObject.GetComponent<BaseItem>();
-      Item.PickUpItem();
+      PickUpItemServerRpc(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
     }
+  }
+
+  [ServerRpc]
+  private void PickUpItemServerRpc(float x, float y)
+  {
+    // list all items in the scene
+    var items = FindObjectsOfType<BaseItem>();
+    // round x to 2 decimal places
+    x = (int)x*1000;
+    y = (int)y*1000;
+
+    var item = items.FirstOrDefault(i => {
+      var itemX = (int)i.transform.position.x*1000;
+      var itemY = (int)i.transform.position.y*1000;
+      return itemX == x && itemY == y;
+    });
+    
+    Throw(new Vector2(0, 7f));
+     
+    if (item == null) return;
+    
+    _hasItem.Value = true;
+    Item = item;
+    Item.PickUpItem();
+  }
+
+  [ServerRpc]
+  private void ThrowItemServerRpc(float x, float y, float newPosX, float newPosY)
+  {
+    Item.transform.position = new Vector2(newPosX, newPosY);
+    Item.ThrowItem(new Vector2(x, y));
+    _hasItem.Value = false;
+    Item = null;
   }
 }
