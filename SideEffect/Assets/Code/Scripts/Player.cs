@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
     public int Health { get; set; }
     public BaseItem Item { get; set; }
@@ -17,8 +18,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Move();
-        Act();
+        if (IsOwner)
+        {
+            Move();
+            Act();
+        }
+
     }
 
     public void AddEffect(BaseEffect effect) {

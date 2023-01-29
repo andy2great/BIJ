@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public abstract class BaseItem: MonoBehaviour {
+public abstract class BaseItem: NetworkBehaviour {
   public abstract string Name { get; set; }
   public abstract int Damage { get; set; }
   public abstract int Health { get; set; }
