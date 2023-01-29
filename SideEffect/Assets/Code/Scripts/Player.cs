@@ -26,6 +26,9 @@ public class Player : MonoBehaviour
 
   public void AddEffect(BaseEffect effect)
   {
+    // Activate trigger animation
+    GetComponent<Animator>().SetTrigger("BlHit");
+
     if (!hasReceivedEffect)
     {
       hasReceivedEffect = true;
@@ -65,9 +68,12 @@ public class Player : MonoBehaviour
 
   private void Move()
   {
-    if (Input.GetAxis("Horizontal") != 0)
+    var walking = Input.GetAxis("Horizontal") != 0;
+    GetComponent<Animator>().SetBool("BlWalk", walking);
+    if (walking)
     {
       FacingRight = Input.GetAxis("Horizontal") > 0;
+      GetComponent<SpriteRenderer>().flipX = !FacingRight;
     }
 
     transform.Translate(Input.GetAxis("Horizontal") * Time.deltaTime * 7f, 0f, 0f);
@@ -94,6 +100,7 @@ public class Player : MonoBehaviour
   private void Throw(Vector2 vector)
   {
     if (Item == null) return;
+    GetComponent<Animator>().SetTrigger("TrAttack");
 
     Item.transform.position = transform.position;
     Item.ThrowItem(vector);
