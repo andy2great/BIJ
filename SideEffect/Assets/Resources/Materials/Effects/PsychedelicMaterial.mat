@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpychedelicMaterial
+  m_Name: PsychedelicMaterial
   m_Shader: {fileID: -6465566751694194690, guid: a7416661701436192985ed8575a3b252, type: 3}
   m_ValidKeywords:
   - _ALPHATEST_ON
@@ -66,8 +66,8 @@ Material:
     - _Intensity: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scale: 2
-    - _Speed: 1
+    - _Scale: 4
+    - _Speed: 29.5
     - _SrcBlend: 1
     - _Surface: 0
     - _ZTest: 4
