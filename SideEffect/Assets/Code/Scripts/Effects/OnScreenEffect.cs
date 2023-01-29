@@ -12,11 +12,6 @@ public abstract class OnScreenEffect : BaseEffect
         _onScreenEffectController = GameObject
             .FindWithTag("OnScreenEffectController")
             .GetComponent<OnScreenEffectController>() as OnScreenEffectController;
-
-        if (Name == "None")
-        {
-            ApplyEffect().MoveNext();
-        }
     }
 
     public override IEnumerator ApplyEffect()

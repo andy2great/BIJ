@@ -11,5 +11,5 @@ public class Hammer : BaseItem {
   public override int YSpeedFactor { get; set; } = 1;
   public override float Spin { get; set; } = 0.5f;
 
-  public override Type[] EffectTypes => new Type[] { typeof(Blinking), typeof(TrippyCamera), typeof(Psychedelic) };
+  public override Type[] EffectTypes => new Type[] { typeof(Blurry), typeof(BloodSpatter), typeof(Blinking), typeof(TrippyCamera), typeof(Psychedelic) };
 }
